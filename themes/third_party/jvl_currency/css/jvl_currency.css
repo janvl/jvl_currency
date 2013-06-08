@@ -1,0 +1,41 @@
+.jvl_currency{
+	background-image: url("../images/bg.png");
+	background-position: top left;	
+	height: 38px;
+	width: 134px;
+	position: relative;
+}
+.jvl_currency span{
+	position: absolute;
+	top:12px;
+	left: 1px;
+	font-family:"Myriad Pro";
+	font-size: 16px;
+	color: #646c71;
+	width: 36px;
+	text-align: center;
+	display: block;
+	text-shadow: 0px 1px 0px white;
+}
+.jvl_currency input{
+	position: absolute;
+	top:8px;
+	height: 25px;
+	line-height: 25px;	
+	left: 50px;
+	width: 80px;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	margin: 0;
+	padding: 0;
+	font-family: Arial;
+}
+.jvl_currency input:focus{
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+	color: #000;
+	margin: 0;
+	padding: 0;	
+}
