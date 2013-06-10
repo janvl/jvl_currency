@@ -16,7 +16,7 @@ class jvl_currency_ft extends EE_Fieldtype {
 	*/
 	var $info = array(
   		'name'             => 'JVL Currency',
-  		'version'          => '1.2'
+  		'version'          => '1.2.1'
 	);
 
 	var $addon_name = 'jvl_currency';
@@ -59,8 +59,8 @@ class jvl_currency_ft extends EE_Fieldtype {
 	{		
 		$this->EE->lang->loadfile('jvl_currency');
 		
-		$this->EE->cp->add_to_head('<script type="text/javascript" src="'.$this->EE->config->item('theme_folder_url').'third_party/jvl_currency/js/jvl_currency.js"></script>');
-		$this->EE->cp->add_to_head('<link rel="stylesheet" type="text/css" href="'.$this->EE->config->item('theme_folder_url').'third_party/jvl_currency/css/jvl_currency.css" />');
+		$this->EE->cp->add_to_head('<script type="text/javascript" src="' . URL_THIRD_THEMES . '/jvl_currency/js/jvl_currency.js"></script>');
+		$this->EE->cp->add_to_head('<link rel="stylesheet" type="text/css" href="' . URL_THIRD_THEMES . '/jvl_currency/css/jvl_currency.css" />');
 		
 		$input = form_input(array(
 			'name' => $this->field_name,
@@ -70,14 +70,14 @@ class jvl_currency_ft extends EE_Fieldtype {
 			'maxlength' => '10'
 		));
 		
-		$currency = "$";
+		$currency = "&#36;";
 		
 		switch ($this->settings['currency']){
 			case "euro":
 		        $currency = "&euro;";
 		        break;
 		    case "dollar":
-		        $currency = "$";
+		        $currency = "&#36;";
 		        break;
 		    case "pound":
 		        $currency = "&pound;";
@@ -100,14 +100,14 @@ class jvl_currency_ft extends EE_Fieldtype {
 	*/	
 	function replace_tag($data, $params = array(), $tagdata = FALSE)
 	{
-		$currency = "$";
+		$currency = "&#36;";
 		
 		switch ($this->settings['currency']){
 			case "euro":
 		        $currency = "&euro;";
 		        break;
 		    case "dollar":
-		        $currency = "$";
+		        $currency = "&#36;";
 		        break;
 		    case "pound":
 		        $currency = "&pound;";
@@ -117,7 +117,16 @@ class jvl_currency_ft extends EE_Fieldtype {
 		        break;		
 		}
 		
-	    return $currency  . $data;
+		if(count($params) > 0)
+		{
+			array_key_exists('decimals', $params)		? $decimals = $params['decimals']			: $decimals = 0;
+			array_key_exists('dec_point', $params)		? $dec_point = $params['dec_point']			: $dec_point = '.';
+			array_key_exists('thousands_sep', $params)	? $thousands_sep = $params['thousands_sep']	: $thousands_sep = '';
+			return $currency . number_format ($data, $decimals, $dec_point, $thousands_sep);
+		}
+		else{
+		    return $currency . $data;
+		}
 	}
 	
 	function replace_value($data, $params = array(), $tagdata = FALSE)
@@ -127,14 +136,14 @@ class jvl_currency_ft extends EE_Fieldtype {
 	
 	function replace_currency($data, $params = array(), $tagdata = FALSE)
 	{
-		$currency = "$";
+		$currency = "&#36;";
 		
 		switch ($this->settings['currency']){
 			case "euro":
 		        $currency = "&euro;";
 		        break;
 		    case "dollar":
-		        $currency = "$";
+		        $currency = "&#36;";
 		        break;
 		    case "pound":
 		        $currency = "&pound;";
